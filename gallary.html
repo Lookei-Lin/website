@@ -5,11 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Document</title>
         <link rel="stylesheet" href="StyleSheets/navbar.css">
+        <link rel="stylesheet" href="StyleSheets/gallery.css">
     </head>
     <body>
         <nav class="navbar">
             <a href="index.html">Go Back</a>
         </nav>
-        
+
+        <section id="pictures">
+            <h2>Gallery</h2>
+            <div class="picture-grid" id="picture-grid">   
+                <!--here will be images-->
+            </div>
+
+            <h3>Upload your picture:</h3>
+            <input type="file" id="imageUpload" accept="image/*">
+            <button onclick="uploadImage()">Upload</button>
+        </section> 
+
+
+    <script src="JavaScripts/gallery.js"></script>   
     </body>
 </html>
