@@ -1,5 +1,11 @@
+body{
+    margin: 0;
+    
+}
+
 .navbar {
     display: flex;
+    justify-content: center;
     background-color: #333;
     padding: 20px;
     gap: 15px;
@@ -15,4 +21,4 @@
 
 .navbar a:hover {
     background-color: #6d6d6d;
-}as
+}
