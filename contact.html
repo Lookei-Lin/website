@@ -5,12 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>contact</title>
     <link rel="stylesheet" href="StyleSheets/navbar.css">
+    <link rel="stylesheet" href="StyleSheets/contact.css">
     </head>
     <body>
-        
         <nav class="navbar">
             <a href="index.html">Go Back</a>
         </nav>
+        
+        <form class="flex-container">
+            <div>
+                <label for="name">Your Name:</label>
+                <input type="name" id="name" required>
+            </div>
+
+            <div>
+                <label for="email">Your E-Mail</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div>
+                <label for="message">Leave your message here.</label>
+                <textarea name="message" id="message" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+        </form>
         
     </body>
 </html>
