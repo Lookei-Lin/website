@@ -1,6 +1,5 @@
-body{
+body {
     margin: 0;
-    
 }
 
 .navbar {
@@ -9,16 +8,48 @@ body{
     background-color: #333;
     padding: 20px;
     gap: 15px;
-
 }
-.navbar a   {
+.navbar a span {
+    position: relative;
+    z-index: 1;
+}
+.navbar a {
+    position: relative;
+    display: inline-block;
+    z-index: 1;
     color: white;
     text-decoration: none;
     padding: 8px 12px;
     border-radius: 10px;
-    transition: background-color 0.5s ease;
+    overflow: hidden;
 }
 
 .navbar a:hover {
-    background-color: #6d6d6d;
+    background-color: hsl(350, 55%, 96%)
+}
+
+.navbar a::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    background-image: url("/pictures/raccon-unscreen-unscreen.gif");
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    pointer-events: none;
+    transform: translate(-50%, -50%) translateX(50%);
+    z-index: 0;
+}
+
+.navbar a:hover::after {
+    opacity: 1;
+    animation: orbit 2s linear infinite;
+}
+
+@keyframes orbit {
+  0%   { transform: translate(-50%, -50%) rotate(0deg) translateX(30%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(30%) rotate(-360deg); }
 }
