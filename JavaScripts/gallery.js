@@ -1,37 +1,43 @@
-const firebaseConfig = {
-  apiKey: "AIzaSyB2ptB2M0Q4_PGhKzgtoft0Tqu0kFD_R40",
-  authDomain: "image-uploads-ad290.firebaseapp.com",
-  projectId: "image-uploads-ad290",
-  storageBucket: "image-uploads-ad290.appspot.com", // fixed .appspot.com
-  messagingSenderId: "227225473740",
-  appId: "1:227225473740:web:0ddc1941af75abcaf0e869"
-};
+document.querySelector("button").addEventListener("click", () => {
+    const fileInput = document.getElementById("imageUpload");
+    const file = fileInput.files[0];
+    if (!file)  {
+      alert("Please selecte a file first!");
+      return;
+    }
 
-// Initialize Firebase
-const app = firebase.initializeApp(firebaseConfig);
-const storage = firebase.storage();
+  const formData = new formData();
+  formData.append("image", file);
 
-function uploadImage() {
-  const input = document.getElementById('imageUpload');
-  const file = input.files[0];
-  if (!file) return alert('Please select an image.');
+  fetch("/upload", {
+    method:"POST",
+    body: formData
 
-  // Preview image
-  const reader = new FileReader();
-  reader.onload = function(e) {
-    const img = document.createElement('img');
-    img.src = e.target.result;
-    document.getElementById('picture-grid').appendChild(img);
-  };
-  reader.readAsDataURL(file);
+  })
+  .then(res => res.text())
+  .then(data => {
+    alert(data);
+    loadGallery();
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Upload failed");
+  });
+});
 
-  // Upload to Firebase Storage with timestamp to avoid overwriting
-  const storageRef = storage.ref('images/' + Date.now() + '-' + file.name);
-  storageRef.put(file)
-    .then(snapshot => {
-      console.log('Upload file successful!');
-    })
-    .catch(error => {
-      console.error('Upload failed:', error);
+function loadGallery() {
+  fetch("gallery")
+    .then(res => res.json())
+    .then(images => {
+      const grid = document.getElementById("picture-grid");
+      grid.innerHTML = "";
+      images.forEach(img => {
+        const image = document.createElement("img");
+        img.src= "/uploads" + img;
+        grid.appendChild(image)
+      });
     });
+
 }
+
+window.onload = loadGallery;
