@@ -1,30 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Gallery</title>
-        <link rel="stylesheet" href="StyleSheets/navbar.css">
-        <link rel="stylesheet" href="StyleSheets/gallery.css">
-    </head>
-    <body>
-        <nav class="navbar">
-            <a href="index.html">Go Back</a>
-        </nav>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="StyleSheets/navbar.css">
+    <link rel="stylesheet" href="StyleSheets/gallery.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html">Go Back</a>
+    </nav>
 
-        <section id="pictures">
-            <h2>Gallery</h2>
-            <div class="picture-grid" id="picture-grid"></div>
+    <section id="pictures">
+        <h2>Gallery</h2>
+        <div class="picture-grid" id="picture-grid"></div>
 
-            <h3>Upload your picture:</h3>
-            <input type="file" id="imageUpload" accept="image/*">
-            <button id="uploadBtn">Upload</button>
-        </section> 
+        <h3>Upload your picture:</h3>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" name="fileToUpload" id="imageUpload" accept="image/*" required>
+            <button type="submit">Upload</button>
+        </form>
+        <div id="uploadMessage"></div>
+    </section>
 
-        <script src="JavaScripts/gallery.js"></script>
+    <script>
+    const form = document.getElementById("uploadForm");
+    const messageDiv = document.getElementById("uploadMessage");
 
-        <!-- Pedro Audio -->
-        <audio id="hoverAudio" src="sound/pedroo.mp3"></audio>
-        <script src="JavaScripts/pedro.js"></script>
-    </body>
+    form.addEventListener("submit", function(e) {
+        e.preventDefault(); // prevent page reload
+        const formData = new FormData(form);
+
+        fetch("php/uploads.php", {
+            method: "POST",
+            body: formData
+        })
+        .then(res => res.text())
+        .then(text => {
+            messageDiv.textContent = text; // show message on page
+            form.reset();
+        })
+        .catch(err => {
+            messageDiv.textContent = "? Upload failed: " + err;
+        });
+    });
+    </script>
+
+    <script src="JavaScripts/gallery.js"></script>
+    <audio id="hoverAudio" src="sound/pedroo.mp3"></audio>
+    <script src="JavaScripts/pedro.js"></script>
+</body>
 </html>
